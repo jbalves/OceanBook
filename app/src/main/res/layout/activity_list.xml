@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+        <ImageView
+            android:id="@+id/imgCapa"
+            android:paddingLeft="16dp"
+            android:layout_width="72dp"
+            android:layout_height="48dp"
+            android:src="@drawable/moodle"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imgCapa">
+
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:paddingLeft="8dp"
+                android:paddingRight="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MOODLE 2 para Autores e Tutores - 3. Edição" />
+            <TextView
+                android:id="@+id/txtAutor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Robson Santos da Silva"/>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtPaginas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="168"
+                    />
+                <TextView
+                    android:id="@+id/txtAno"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2013"
+                    android:layout_alignParentEnd="true"/>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+</RelativeLayout>
