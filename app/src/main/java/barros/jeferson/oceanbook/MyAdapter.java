@@ -1,6 +1,5 @@
 package barros.jeferson.oceanbook;
 
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +92,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder setCapa(String capa){
             if (capaView == null) return this;
             //processar a imagem
+            return this;
         }
 
     }
