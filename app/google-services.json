@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "116332561135",
+    "firebase_url": "https://ocean-book-9891b.firebaseio.com",
+    "project_id": "ocean-book-9891b",
+    "storage_bucket": "ocean-book-9891b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116332561135:android:f9c688998fda418a",
+        "android_client_info": {
+          "package_name": "barros.jeferson.oceanbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "116332561135-dl5vvsh78fpqqrgol36f6saj1q7h6ejl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "barros.jeferson.oceanbook",
+            "certificate_hash": "176D6F4D2E15968A01B2E390BB8418DC112E645D"
+          }
+        },
+        {
+          "client_id": "116332561135-sqgfufv317m83ftmshih8j41rfc8cjeg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSMxFyUys3TqZkLuHUWPa_RMscASok5ww"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "116332561135-sqgfufv317m83ftmshih8j41rfc8cjeg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
