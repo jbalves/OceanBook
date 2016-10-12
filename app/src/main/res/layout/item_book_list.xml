@@ -29,7 +29,8 @@
                 android:id="@+id/txtAutor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Robson Santos da Silva"/>
+                android:text="Robson Santos da Silva"
+                android:paddingLeft="8dp"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -40,13 +41,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="168"
-                    />
+                    android:paddingLeft="8dp"/>
                 <TextView
                     android:id="@+id/txtAno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2013"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_alignParentEnd="true"
+                    android:paddingRight="8dp"/>
 
 
             </RelativeLayout>

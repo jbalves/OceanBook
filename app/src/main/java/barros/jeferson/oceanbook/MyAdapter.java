@@ -1,11 +1,14 @@
 package barros.jeferson.oceanbook;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -15,21 +18,25 @@ import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
+    private final Context context;
     private ArrayList<Book> lista;
 
-    public MyAdapter (ArrayList<Book> lista) {
+    public MyAdapter (Context context, ArrayList<Book> lista) {
         this.lista = lista;
+        this.context = context;
     }
 
+    //#2 monta o layout da lista
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_book_list, null);
         return new ViewHolder(view);
     }
 
+    //#3 recupera uma posição da lista no layout
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //Recuperei a referência do meu livro
+        //Recupera a referência do meu livro
         Book book = lista.get(position);
 
         //Seta os valores do livro para o layout dentro do holder
@@ -41,12 +48,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .setCapa(book.getCapa());
     }
 
+    //#4 conta a quantidade de elementos existente na lista
     @Override
     public int getItemCount() {
         //tamanho da lista
         return lista.size();
     }
 
+    //#1 método a ser implementado
+    //mapeia os elementos de layout
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tituloView;
@@ -92,6 +102,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder setCapa(String capa){
             if (capaView == null) return this;
             //processar a imagem
+            Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(capaView);
             return this;
         }
 

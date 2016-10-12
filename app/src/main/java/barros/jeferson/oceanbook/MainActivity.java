@@ -22,10 +22,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Livro", "Título: " + book.getTitulo());
         }
 
-        MyAdapter adapter = new MyAdapter(lista);
-
+        MyAdapter adapter = new MyAdapter(this, lista);
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.lista_recyclerview);
-
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
