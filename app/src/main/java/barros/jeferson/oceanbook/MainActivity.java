@@ -8,6 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.http.Request;
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.concurrent.RunnableFuture;
 
@@ -35,12 +40,21 @@ public class MainActivity extends AppCompatActivity {
         //Lógica do progress bar
         hideLoad(lista);
 
+        /*
         new Thread(new Runnable() {
             @Override
             public void run() {
                 HttpRequest.GET("http://gitlab.oceanmanaus.com/snippets/1/raw");
             }
         }).start();
+        */
+
+        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", new Request.RequestListener() {
+            @Override
+            public void onRequestOk(String result, JSONObject jsonObject, int i) {
+                Log.d("Request",result);
+            }
+        }).get().send();
     }
 
     private void hideLoad(ArrayList<Book> lista) {
