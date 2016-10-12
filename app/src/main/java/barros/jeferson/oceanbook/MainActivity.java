@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.concurrent.RunnableFuture;
 
 public class MainActivity extends AppCompatActivity {
     //private ArrayList<Book> books;
@@ -33,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Lógica do progress bar
         hideLoad(lista);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HttpRequest.GET("http://gitlab.oceanmanaus.com/snippets/1/raw");
+            }
+        }).start();
     }
 
     private void hideLoad(ArrayList<Book> lista) {
