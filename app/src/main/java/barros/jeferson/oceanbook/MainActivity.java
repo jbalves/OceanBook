@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
@@ -22,10 +24,22 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Livro", "Título: " + book.getTitulo());
         }
 
+
+        //Cria o adapter
         MyAdapter adapter = new MyAdapter(this, lista);
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.lista_recyclerview);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //Lógica do progress bar
+        hideLoad(lista);
+    }
+
+    private void hideLoad(ArrayList<Book> lista) {
+        if (lista.size() >0 ){
+            ProgressBar progressBar = (ProgressBar) findViewById(R.id.loading);
+            progressBar.setVisibility(View.GONE);
+        }
     }
 
     public ArrayList<Book> iniciarLista() {

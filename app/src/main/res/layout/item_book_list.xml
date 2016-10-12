@@ -9,8 +9,7 @@
             android:id="@+id/imgCapa"
             android:paddingLeft="16dp"
             android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/moodle"/>
+            android:layout_height="60dp"/>
 
         <LinearLayout
             android:orientation="vertical"

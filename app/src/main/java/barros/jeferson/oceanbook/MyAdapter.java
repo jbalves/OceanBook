@@ -102,7 +102,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder setCapa(String capa){
             if (capaView == null) return this;
             //processar a imagem
-            Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(capaView);
+            Picasso.with(context).load(capa).placeholder(R.mipmap.ic_launcher).resize(200,200).centerCrop().into(capaView);
             return this;
         }
 
