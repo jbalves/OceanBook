@@ -11,12 +11,14 @@ import android.widget.ProgressBar;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.http.Request;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.concurrent.RunnableFuture;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Request.RequestListener {
     //private ArrayList<Book> books;
 
     @Override
@@ -31,30 +33,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //Cria o adapter
-        MyAdapter adapter = new MyAdapter(this, lista);
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.lista_recyclerview);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //Lógica do progress bar
-        hideLoad(lista);
-
-        /*
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpRequest.GET("http://gitlab.oceanmanaus.com/snippets/1/raw");
-            }
-        }).start();
-        */
-
-        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", new Request.RequestListener() {
-            @Override
-            public void onRequestOk(String result, JSONObject jsonObject, int i) {
-                Log.d("Request",result);
-            }
-        }).get().send();
+        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", this).get().send();
     }
 
     private void hideLoad(ArrayList<Book> lista) {
@@ -109,5 +88,71 @@ public class MainActivity extends AppCompatActivity {
         lista.add(book5);
 
         return lista;
+    }
+
+    @Override
+    public void onRequestOk(String resposta, JSONObject jsonObject, int code) {
+        if (code == Request.NENHUM_ERROR) {
+            Log.d("Debug","resposta: " + resposta);
+
+            ArrayList<Book> lista = new ArrayList<>();
+
+            if (resposta !=null) {
+                try {
+                    JSONObject object = new JSONObject(resposta);
+
+                    JSONArray ocean = object.getJSONArray("ocean");
+
+                    for (int i = 0; i < ocean.length(); i++) {
+                        JSONObject item = ocean.getJSONObject(i);
+
+                        JSONArray livros = item.getJSONArray("livros");
+                        for (int j=0; j<livros.length();j++){
+
+                            JSONObject livro = livros.getJSONObject(j);
+                            String titulo = livro.getString("titulo");
+                            String autor = livro.getString("autor");
+                            int ano = livro.getInt("ano");
+                            int paginas = livro.getInt("paginas");
+                            String capa = livro.getString("capa");
+
+                            Book book = new Book();
+                            book.setTitulo(titulo);
+                            book.setAutor(autor);
+                            book.setAno(ano);
+                            book.setPaginas(paginas);
+                            book.setCapa(capa);
+
+                            lista.add(book);
+
+                            Log.d("Debug",titulo);
+                            Log.d("Debug",autor);
+                            Log.d("Debug",String.format("%s",ano));
+                            Log.d("Debug",String.format("%s",paginas));
+                            Log.d("Debug",capa);
+                            Log.d("Debug","ID: " +lista.size());
+
+                        }
+                    }
+
+                    criarAdapter(lista);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void criarAdapter(ArrayList<Book> lista){
+
+        //Cria o adapter
+        MyAdapter adapter = new MyAdapter(this, lista);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.lista_recyclerview);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //Lógica do progress bar
+        hideLoad(lista);
     }
 }

@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.oceanbrasil.libocean.Ocean;
+import com.oceanbrasil.libocean.control.glide.GlideRequest;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -102,7 +105,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder setCapa(String capa){
             if (capaView == null) return this;
             //processar a imagem
-            Picasso.with(context).load(capa).placeholder(R.mipmap.ic_launcher).resize(200,200).centerCrop().into(capaView);
+            Ocean
+                    .glide(context)
+                    .load(capa)
+                    .build(GlideRequest.BITMAP)
+                    .resize(200,200)
+                    .into(capaView);
             return this;
         }
 
