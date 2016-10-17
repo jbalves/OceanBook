@@ -1,5 +1,6 @@
 package barros.jeferson.oceanbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.concurrent.RunnableFuture;
 
-public class MainActivity extends AppCompatActivity implements Request.RequestListener {
+public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.ClickListener {
     //private ArrayList<Book> books;
 
     @Override
@@ -31,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
         for (Book book : lista) {
             Log.d("Livro", "Título: " + book.getTitulo());
         }
-
 
         Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", this).get().send();
     }
@@ -152,7 +152,14 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        adapter.setClickListener(this);
+
         //Lógica do progress bar
         hideLoad(lista);
+    }
+
+    @Override
+    public void itemCLicked(View view, int position) {
+        startActivity(new Intent(this,DetalhesActivity.class));
     }
 }

@@ -1,6 +1,8 @@
 package barros.jeferson.oceanbook;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.util.CircularArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private final Context context;
     private ArrayList<Book> lista;
+    private ClickListener clickListener;
 
     public MyAdapter (Context context, ArrayList<Book> lista) {
         this.lista = lista;
@@ -51,6 +54,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .setCapa(book.getCapa());
     }
 
+    public void setClickListener(ClickListener clickListener){
+        this.clickListener = clickListener;
+    }
+
     //#4 conta a quantidade de elementos existente na lista
     @Override
     public int getItemCount() {
@@ -60,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     //#1 método a ser implementado
     //mapeia os elementos de layout
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView tituloView;
         private TextView autorView;
@@ -70,6 +77,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+
+            itemView.setOnClickListener(this);
+
             //Recuperei as referências do layout
             tituloView = (TextView) itemView.findViewById(R.id.txtTitulo);
             autorView = (TextView) itemView.findViewById(R.id.txtAutor);
@@ -114,5 +124,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             return this;
         }
 
+        @Override
+        public void onClick(View v) {
+            context.startActivity(new Intent(context, DetalhesActivity.class));
+
+            if (clickListener != null) {
+                clickListener.itemCLicked(v,getAdapterPosition());
+            }
+        }
+    }
+
+    public interface ClickListener {
+        public void itemCLicked (View view, int position);
     }
 }
