@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.util.CircularArray;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +18,28 @@ import com.oceanbrasil.libocean.control.glide.GlideRequest;
 import java.util.ArrayList;
 
 /**
- * Created by aluno on 10/10/2016.
+ * Created by Jeferson Barros on 10/10/2016.
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private final Context context;
     private ArrayList<Book> lista;
-    private RecyclerOnItemClickListener mItemClickListener;
+
+
+    private AdapterListener mAdapterListener;
 
     public MyAdapter (Context context, ArrayList<Book> lista) {
         this.lista = lista;
         this.context = context;
+    }
+
+    public AdapterListener getmAdapterListener() {
+        return mAdapterListener;
+    }
+
+    public void setmAdapterListener(AdapterListener mAdapterListener) {
+        this.mAdapterListener = mAdapterListener;
     }
 
     //#2 monta o layout da lista
@@ -53,10 +64,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .setCapa(book.getCapa());
     }
 
-    public void setClickListener(RecyclerOnItemClickListener mItemClickListener){
-        this.mItemClickListener = mItemClickListener;
-    }
-
     //#4 conta a quantidade de elementos existente na lista
     @Override
     public int getItemCount() {
@@ -64,9 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return lista.size();
     }
 
-    public interface RecyclerOnItemClickListener {
-        public void onItemClicked (View view, int position);
-    }
+
 
     //#1 método a ser implementado
     //mapeia os elementos de layout
@@ -81,7 +86,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(this);
 
             //Recuperei as referências do layout
             tituloView = (TextView) itemView.findViewById(R.id.txtTitulo);
@@ -89,6 +93,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             paginaView = (TextView) itemView.findViewById(R.id.txtPaginas);
             anoView = (TextView) itemView.findViewById(R.id.txtAno);
             capaView = (ImageView) itemView.findViewById(R.id.imgCapa);
+
+            //Simula o click
+            itemView.setOnClickListener(this);
+
         }
 
         public ViewHolder setTitulo(String titulo) {
@@ -128,8 +136,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
 
         @Override
-        public void onClick(View v) {
-            if (mItemClickListener != null) mItemClickListener.onItemClicked(v, getAdapterPosition());
+        public void onClick(View view) {
+            int position = getPosition();
+
+            if (mAdapterListener != null) {
+                mAdapterListener.onItemClick(view, position);
+            }
         }
+    }
+
+    public interface AdapterListener {
+        public void onItemClick (View view, int position);
     }
 }

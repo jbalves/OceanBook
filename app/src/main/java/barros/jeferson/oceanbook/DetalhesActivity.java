@@ -20,11 +20,13 @@ public class DetalhesActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detalhes_activity);
 
-        String capa = getIntent().getStringExtra("capa");
-        String titulo = getIntent().getStringExtra("titulo");
-        String autor = getIntent().getStringExtra("autor");
-        String paginas = getIntent().getStringExtra("paginas");
-        String ano = getIntent().getStringExtra("ano");
+        recuperarLivro();
+
+    }
+
+    private void recuperarLivro() {
+
+        Book book = (Book) getIntent().getSerializableExtra("book");
 
         ImageView capaImageView = (ImageView) findViewById(R.id.detalhesImageView);
         TextView tituloTextView = (TextView) findViewById(R.id.detalhesTitulo);
@@ -32,20 +34,19 @@ public class DetalhesActivity extends AppCompatActivity{
         TextView paginasTextView = (TextView) findViewById(R.id.detalhesPaginas);
         TextView anoTextView = (TextView) findViewById(R.id.detalhesAno);
 
-        if (capa != null) {
-            //processar a imagem
+        if (book.getCapa() != null) {
             Ocean
                     .glide(this)
-                    .load(capa)
+                    .load(book.getCapa())
                     .build(GlideRequest.BITMAP)
                     .resize(200,200)
                     .into(capaImageView);
         }
 
-        tituloTextView.setText(titulo);
-        autorTextView.setText(autor);
-        paginasTextView.setText(paginas);
-        anoTextView.setText(ano);
+        tituloTextView.setText(book.getTitulo());
+        autorTextView.setText(book.getAutor());
+        paginasTextView.setText(String.valueOf(book.getPaginas()));
+        anoTextView.setText(String.valueOf(book.getAno()));
     }
 
 }

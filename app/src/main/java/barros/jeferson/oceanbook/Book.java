@@ -1,10 +1,12 @@
 package barros.jeferson.oceanbook;
 
+import java.io.Serializable;
+
 /**
  * Created by aluno on 07/10/2016.
  */
 
-public class Book {
+public class Book implements Serializable{
     private String capa;
     private String titulo;
     private String autor;
