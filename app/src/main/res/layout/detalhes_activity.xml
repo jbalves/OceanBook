@@ -5,15 +5,14 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/detalhesImageView"
         android:padding="12dp"
         android:layout_margin="8dp"
         android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@android:color/holo_blue_dark"/>
+        android:layout_height="120dp" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:background="@android:color/holo_green_dark"
         android:padding="12dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
@@ -21,11 +20,13 @@
         android:layout_height="120dp">
 
         <TextView
+            android:id="@+id/detalhesTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Título"/>
 
         <TextView
+            android:id="@+id/detalhesAutor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Autor"/>
@@ -36,17 +37,18 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/detalhesPaginas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pagina"/>
 
             <TextView
+                android:id="@+id/detalhesAno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ano"/>
 
         </LinearLayout>
-
 
     </LinearLayout>
 

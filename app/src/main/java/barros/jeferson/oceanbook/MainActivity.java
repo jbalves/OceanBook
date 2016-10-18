@@ -16,11 +16,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.concurrent.RunnableFuture;
 
-public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.ClickListener {
+public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.RecyclerOnItemClickListener {
     //private ArrayList<Book> books;
+
+    private ArrayList<Book> mlista = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
         if (code == Request.NENHUM_ERROR) {
             Log.d("Debug","resposta: " + resposta);
 
-            ArrayList<Book> lista = new ArrayList<>();
+
 
             if (resposta !=null) {
                 try {
@@ -123,19 +126,19 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
                             book.setPaginas(paginas);
                             book.setCapa(capa);
 
-                            lista.add(book);
+                            mlista.add(book);
 
                             Log.d("Debug",titulo);
                             Log.d("Debug",autor);
                             Log.d("Debug",String.format("%s",ano));
                             Log.d("Debug",String.format("%s",paginas));
                             Log.d("Debug",capa);
-                            Log.d("Debug","ID: " +lista.size());
+                            Log.d("Debug","ID: " +mlista.size());
 
                         }
                     }
 
-                    criarAdapter(lista);
+                    criarAdapter(mlista);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -159,7 +162,18 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
     }
 
     @Override
-    public void itemCLicked(View view, int position) {
-        startActivity(new Intent(this,DetalhesActivity.class));
+    public void onItemClicked (View view, int position) {
+
+        Book livroClicado = mlista.get(position);
+
+        Intent intent = new Intent(MainActivity.this,DetalhesActivity.class);
+
+        intent.putExtra("capa",livroClicado.getCapa());
+        intent.putExtra("titulo",livroClicado.getTitulo());
+        intent.putExtra("autor",livroClicado.getAutor());
+        intent.putExtra("paginas",livroClicado.getPaginas());
+        intent.putExtra("ano",livroClicado.getAno());
+
+        startActivity(intent);
     }
 }

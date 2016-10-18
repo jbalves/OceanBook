@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private final Context context;
     private ArrayList<Book> lista;
-    private ClickListener clickListener;
+    private RecyclerOnItemClickListener mItemClickListener;
 
     public MyAdapter (Context context, ArrayList<Book> lista) {
         this.lista = lista;
@@ -54,8 +53,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 .setCapa(book.getCapa());
     }
 
-    public void setClickListener(ClickListener clickListener){
-        this.clickListener = clickListener;
+    public void setClickListener(RecyclerOnItemClickListener mItemClickListener){
+        this.mItemClickListener = mItemClickListener;
     }
 
     //#4 conta a quantidade de elementos existente na lista
@@ -63,6 +62,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemCount() {
         //tamanho da lista
         return lista.size();
+    }
+
+    public interface RecyclerOnItemClickListener {
+        public void onItemClicked (View view, int position);
     }
 
     //#1 método a ser implementado
@@ -126,15 +129,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            context.startActivity(new Intent(context, DetalhesActivity.class));
-
-            if (clickListener != null) {
-                clickListener.itemCLicked(v,getAdapterPosition());
-            }
+            if (mItemClickListener != null) mItemClickListener.onItemClicked(v, getAdapterPosition());
         }
-    }
-
-    public interface ClickListener {
-        public void itemCLicked (View view, int position);
     }
 }
