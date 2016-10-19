@@ -20,6 +20,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Created by Jeferson Barros on 10/17/16.
+ */
+
 public class MainActivity extends AppCompatActivity implements Request.RequestListener, MyAdapter.AdapterListener {
 
     private ArrayList<Book> mlista = new ArrayList<>();
@@ -137,9 +141,16 @@ public class MainActivity extends AppCompatActivity implements Request.RequestLi
     @Override
     public void onItemClick(View view, int position) {
 
+        // Recupera a instancia do livro selecionado
         Book book = mlista.get(position);
+        // Intent para abrir a tela de detalhes
         Intent intent = new Intent(MainActivity.this,DetalhesActivity.class);
+        /**
+         * Passa o objeto livro inteiro via Extra transformando a classe book em um Serializable
+         * Obs: Voce precisa implementar a interface Serializable em Book
+         */
         intent.putExtra("book",book);
+        // Executa a intent criada
         startActivity(intent);
     }
 }
