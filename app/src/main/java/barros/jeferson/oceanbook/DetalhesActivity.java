@@ -2,18 +2,28 @@ package barros.jeferson.oceanbook;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.oceanbrasil.libocean.Ocean;
 import com.oceanbrasil.libocean.control.glide.GlideRequest;
+import com.oceanbrasil.libocean.control.http.Request;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jeferson Barros on 10/17/16.
  */
 
-public class DetalhesActivity extends AppCompatActivity{
+public class DetalhesActivity extends AppCompatActivity implements Request.RequestListener{
+
+    private ArrayList<Book> mlista = new ArrayList<>();
 
     private TextView tituloTextView;
     private TextView autorTextView;
@@ -35,6 +45,7 @@ public class DetalhesActivity extends AppCompatActivity{
         // Setando valores do livro para o layout
         setBook(book);
 
+        Ocean.newRequest("http://gitlab.oceanmanaus.com/snippets/1/raw", this).get().send();
     }
 
     /**
@@ -67,10 +78,37 @@ public class DetalhesActivity extends AppCompatActivity{
      */
     private Book recuperarLivro() {
         Book book = new Book();
-
         book = (Book) getIntent().getSerializableExtra("book");
-
         return book;
     }
 
+    @Override
+    public void onRequestOk(String resposta, JSONObject jsonObject, int code) {
+        if (code == Request.NENHUM_ERROR) {
+            Log.d("Detalhes", "resposta: " + resposta);
+            mlista = stringToGson(resposta);
+            criarAdapter(mlista);
+        }
+    }
+
+    private ArrayList<Book> stringToGson(String resposta) {
+
+        ArrayList<Book> livros = new ArrayList<>();
+        Gson gson = new Gson();
+        Bookstore bookstore = gson.fromJson(resposta, Bookstore.class);
+        ArrayList<Item> itens = bookstore.getOcean();
+
+        for (Item item : itens) {
+            livros.addAll(item.getLivros());
+        }
+        return livros;
+    }
+
+    public void criarAdapter(ArrayList<Book> lista){
+
+        DetalhesAdapter adapter = new DetalhesAdapter(this,lista);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.detalhes_recyclerview);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+    }
 }
